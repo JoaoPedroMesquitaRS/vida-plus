@@ -13,3 +13,9 @@ export async function listarLocaisAtendimento(req, res) {
     const locaisAtendimento = await LocalAtendimento.findAll();
     res.json(locaisAtendimento);
 };
+
+export async function listarProfissionaisLocal(req, res) {
+    const { idLocal } = req.params;
+    const profissionais = await LocalAtendimento.findByPk(idLocal, { include: 'profissionais' });
+    res.json(profissionais);
+}
