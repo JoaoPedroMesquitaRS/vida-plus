@@ -21,7 +21,7 @@ const LocalAtendimento = sequelize.define('LocalAtendimento', {
         allowNull: false
     },
     tipo: {
-        type: DataTypes.STRING,
+        type: DataTypes.JSON,
         allowNull: false
     }
 },{

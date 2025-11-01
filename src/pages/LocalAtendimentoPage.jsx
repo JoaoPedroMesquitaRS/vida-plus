@@ -1,19 +1,34 @@
 import React, { useEffect, useState } from "react";
-import ModalLocalAtendimento from "../components/modalLocalAtendimento.jsx";
+import ModalLocalAtendimento from "../components/ModalLocalAtendimento.jsx";
+import ModalCorfirmarExcluir from "../components/ModalCorfirmarExcluir.jsx";
 
 export default function LocalAtendimentoPage() {
 
-    const [showModal, setShowModal] = useState(false);
-    const [ locais, setLocais ] = useState([]);
-    const [profissionais, setProfissionais] = useState({});
+    const [ showModal, setShowModal ] = useState(false);
+    const [ showDeleteModal, setShowDeleteModal ] = useState(false);
 
-    useEffect(() => {
+    const [ locais, setLocais ] = useState([]);
+    const [ profissionais, setProfissionais ] = useState({});
+    const [ modo, setModo ] = useState('');
+
+    const [ localSelecionado, setLocalSelecionado ] = useState({
+        id: '', nome: '', endereco: '', tipo: [], info: ''
+    })
+
+    const [ idLocalSelecionado, setIdLocalSelecionado ] = useState('');
+    
+    async function fetchLocais() {
         fetch('http://localhost:3001/locais-atendimento')
         .then((res) => res.json())
         .then(setLocais);
-    }, []);
+    }
 
     useEffect(() => {
+        fetchLocais();
+    }, []);
+    
+    useEffect(() => {
+
         locais.forEach((local) => {
             if (local.id) {
                 fetch(`http://localhost:3001/locais-atendimento/profissional/${local.id}`)
@@ -37,7 +52,10 @@ export default function LocalAtendimentoPage() {
                 <div className="flex items-center gap-3">
                     <button
                         type="button"
-                        onClick={() => setShowModal(true)}
+                        onClick={() => {
+                            setShowModal(true);
+                            setModo('criar')
+                        }}
                         className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
                     >
                     + Criar Local
@@ -59,11 +77,15 @@ export default function LocalAtendimentoPage() {
 
                                 <div className="mt-3">
                                     <span className="inline-flex items-center gap-2 text-xs text-gray-600">
-                                        <span className="inline-flex rounded-full bg-green-100 px-2 py-0.5 text-green-800">{local.tipo}</span>
+                                        {
+                                            local.tipo.map((tipos) => (
+                                                <span className="inline-flex rounded-full bg-green-100 px-2 py-0.5 text-green-800">{tipos}</span>
+                                            ))
+                                        }
                                     </span>
                                 </div>
 
-                                <div className="mt-4">
+                                {/* <div className="mt-4">
                                     <h3 className="text-sm font-medium text-gray-700">Profissionais</h3>
                                     <ul className="mt-2 space-y-2">
                                         {(profissionais[local.id] || []).map((prof) => (
@@ -79,19 +101,35 @@ export default function LocalAtendimentoPage() {
                                             </li>
                                         ))}
                                     </ul>
-                                </div>
+                                </div> */}
 
                                 <div className="mt-4 flex items-center gap-2">
                                     <button
                                         type="button"
                                         className="rounded-md border border-gray-200 bg-white px-3 py-1 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
                                         data-open-edit-modal
+                                        onClick={() => {
+                                            setModo('editar');
+                                            setLocalSelecionado({
+                                                id: local.id,
+                                                nome: local.nome,
+                                                endereco: local.endereco,
+                                                info: local.info,
+                                                tipo: local.tipo
+                                            })
+                                            setShowModal(true)
+                                        }}
                                     >
                                         Editar
                                     </button>
                                     <button
                                         type="button"
-                                        className="rounded-md bg-red-600 px-3 py-1 text-sm font-medium text-white shadow-sm hover:bg-red-700">
+                                        className="rounded-md bg-red-600 px-3 py-1 text-sm font-medium text-white shadow-sm hover:bg-red-700"
+                                        onClick={() => {
+                                            setModo('excluir-local');
+                                            setShowDeleteModal(true)
+                                        }}
+                                    >
                                         Excluir
                                     </button>
                                 </div>
@@ -105,7 +143,11 @@ export default function LocalAtendimentoPage() {
             </main>
 
             {showModal && (
-                <ModalLocalAtendimento onClose={() => setShowModal(false)} />
+                <ModalLocalAtendimento onClose={() => setShowModal(false)} onLocalCriado={fetchLocais} modo={modo} localSelecionado={localSelecionado} />
+            )}
+
+            {showDeleteModal && (
+                <ModalCorfirmarExcluir onClose={() => setShowDeleteModal(false)} idLocalSelecionado={idLocalSelecionado} modo={modo} />
             )}
 
             {/* Rodapé simples */}
