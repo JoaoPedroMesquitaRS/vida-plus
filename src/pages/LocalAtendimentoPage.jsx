@@ -126,6 +126,7 @@ export default function LocalAtendimentoPage() {
                                         type="button"
                                         className="rounded-md bg-red-600 px-3 py-1 text-sm font-medium text-white shadow-sm hover:bg-red-700"
                                         onClick={() => {
+                                            setIdLocalSelecionado(local.id);
                                             setModo('excluir-local');
                                             setShowDeleteModal(true)
                                         }}
@@ -147,7 +148,7 @@ export default function LocalAtendimentoPage() {
             )}
 
             {showDeleteModal && (
-                <ModalCorfirmarExcluir onClose={() => setShowDeleteModal(false)} idLocalSelecionado={idLocalSelecionado} modo={modo} />
+                <ModalCorfirmarExcluir onClose={() => setShowDeleteModal(false)} idLocalSelecionado={idLocalSelecionado} modo={modo} onLocalCriado={fetchLocais} />
             )}
 
             {/* Rodapé simples */}

@@ -1,13 +1,16 @@
-export default function modalConfirmarExcluir({ onClose, idLocalSelecionado, modo }){
+export default function modalConfirmarExcluir({ onClose, idLocalSelecionado, modo, onLocalCriado }){
 
     async function deletar(modo) {
+        console.log(idLocalSelecionado);
         if(modo === 'excluir-local'){
-            const response = await fetch(`http://localhost:3001/locais-atendimento/3}`, {
+            const response = await fetch(`http://localhost:3001/locais-atendimento/${idLocalSelecionado}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-type': 'application/json'
                 }
             });
+            onLocalCriado();
+            onClose();
         }
     }
 
@@ -35,7 +38,6 @@ export default function modalConfirmarExcluir({ onClose, idLocalSelecionado, mod
                 <button 
                     className="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition"
                     onClick={async () => {
-                        onClose;
                         await deletar(modo);
                         console.log(idLocalSelecionado)
                     }}
