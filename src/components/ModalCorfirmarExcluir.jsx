@@ -1,4 +1,4 @@
-export default function modalConfirmarExcluir({ onClose, idLocalSelecionado, modo, onLocalCriado }){
+export default function modalConfirmarExcluir({ onClose, idLocalSelecionado, modo, onLocalCriado, idProfissionalSelecionado, onProfissionalRegistro }){
 
     async function deletar(modo) {
         console.log(idLocalSelecionado);
@@ -10,6 +10,16 @@ export default function modalConfirmarExcluir({ onClose, idLocalSelecionado, mod
                 }
             });
             onLocalCriado();
+            onClose();
+        }
+        if(modo === 'excluir-profissional'){
+            const response = await fetch(`http://localhost:3001/profissionais/${idProfissionalSelecionado}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-type': 'application/json'
+                }
+            });
+            onProfissionalRegistro();
             onClose();
         }
     }

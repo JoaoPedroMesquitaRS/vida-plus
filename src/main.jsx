@@ -6,13 +6,15 @@ import './index.css'
 
 // Pages
 import LocalAtendimentoPage from './pages/LocalAtendimentoPage.jsx'
+import Profissional from './pages/ProfissionalPage.jsx'
 
 const router = createBrowserRouter([
   {
     path: '/',
     // element: <AppLayout />,
     children: [
-      { path: 'local-atendimento', element: <LocalAtendimentoPage /> }
+      { path: 'local-atendimento', element: <LocalAtendimentoPage /> },
+      { path: 'profissional', element: <Profissional /> }
     ],
   },
 ]);
