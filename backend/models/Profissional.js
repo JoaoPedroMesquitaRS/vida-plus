@@ -12,11 +12,11 @@ const Profissional = sequelize.define('Profissional', {
         type: DataTypes.INTEGER,
         allowNull: true
     },
-    nome: {
-        type: DataTypes.STRING,
-        allowNull: false
+    idEspecialidade:{
+        type: DataTypes.INTEGER,
+        allowNull: true
     },
-    especialidade: {
+    nome: {
         type: DataTypes.STRING,
         allowNull: false
     },
@@ -43,6 +43,11 @@ Profissional.associate = (models) => {
         foreignKey: 'idLocalAtendimento',
         as: 'localAtendimento'
     });
+
+    Profissional.belongsTo(models.Especialidade, {
+        foreignKey: 'idEspecialidade',
+        as: 'especialidade'
+    })
 }
 
 export default Profissional;

@@ -18,6 +18,7 @@ import Paciente from './models/Paciente.js';
 import Prontuario from './models/Prontuario.js';
 import Exame from './models/Exame.js';
 import Atendimento from './models/Atendimento.js';
+import Especialidade from './models/Especialidade.js';
 
 const app = express(); 
 const PORT = process.env.PORT || 3001; 
@@ -34,7 +35,7 @@ app.use('/exames', exameRoute);
 app.use('/atendimentos', atendimentoRoute);
 
 // Associações
-const models = { Profissional, LocalAtendimento, Paciente, Prontuario, Exame, Atendimento };
+const models = { Profissional, LocalAtendimento, Paciente, Prontuario, Exame, Atendimento, Especialidade };
 Object.values(models).forEach((model) => {
   if (model.associate) {
     model.associate(models);

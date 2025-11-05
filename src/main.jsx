@@ -7,6 +7,7 @@ import './index.css'
 // Pages
 import LocalAtendimentoPage from './pages/LocalAtendimentoPage.jsx'
 import Profissional from './pages/ProfissionalPage.jsx'
+import Paciente from './pages/PacientePage.jsx'
 
 const router = createBrowserRouter([
   {
@@ -14,7 +15,8 @@ const router = createBrowserRouter([
     // element: <AppLayout />,
     children: [
       { path: 'local-atendimento', element: <LocalAtendimentoPage /> },
-      { path: 'profissional', element: <Profissional /> }
+      { path: 'profissional', element: <Profissional /> },
+      { path: 'paciente', element: <Paciente /> }
     ],
   },
 ]);
