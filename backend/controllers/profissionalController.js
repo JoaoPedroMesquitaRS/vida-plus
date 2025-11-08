@@ -1,3 +1,4 @@
+import Especialidade from "../models/Especialidade.js";
 import Profissional from "../models/Profissional.js";
 
 export async function criarProfissional(req, res){
@@ -29,7 +30,12 @@ export async function editarProfissional(req, res) {
 }
 
 export async function listarProfissional(req, res) {
-    const profissionais = await Profissional.findAll();
+    const profissionais = await Profissional.findAll({
+        include: {
+            model: Especialidade,
+            as: 'especialidade'
+        }
+    });
     res.json(profissionais);
 };
 

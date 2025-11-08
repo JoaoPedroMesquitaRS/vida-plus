@@ -10,6 +10,7 @@ import pacienteRoute from './routes/pacienteRoute.js';
 import prontuarioRoute from './routes/prontuarioRoute.js'
 import exameRoute from './routes/exameRoute.js';
 import atendimentoRoute from './routes/atendimentoRoute.js';
+import especialidadeRoute from './routes/especialidadeRoute.js';
 
 // MODELOS
 import Profissional from './models/Profissional.js';
@@ -33,6 +34,7 @@ app.use('/pacientes', pacienteRoute);
 app.use('/prontuarios', prontuarioRoute);
 app.use('/exames', exameRoute);
 app.use('/atendimentos', atendimentoRoute);
+app.use('/especialidades', especialidadeRoute);
 
 // Associações
 const models = { Profissional, LocalAtendimento, Paciente, Prontuario, Exame, Atendimento, Especialidade };

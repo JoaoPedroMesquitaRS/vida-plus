@@ -8,3 +8,8 @@ export async function criarEspecialidade(req, res) {
         res.status(500).json({error: error.message});
     }
 };
+
+export async function listarEspecialidades(req, res) {
+    const especialidades = await Especialidade.findAll();
+    res.json(especialidades);
+};

@@ -21,6 +21,10 @@ export default function ProfissionalPage(){
         fetchProfissionais();
     }, [])
 
+    useEffect(() => {
+        console.log(profissionais);
+    }, [profissionais])
+
     return (
         <div className="min-h-screen bg-gray-50 p-6">
             <header className="max-w-6xl mx-auto mb-6">
@@ -48,7 +52,16 @@ export default function ProfissionalPage(){
                         <div>
                             <h2 className="text-xl font-semibold text-gray-800 mb-2">{prof.nome}</h2>
                             <p className="text-gray-600 mb-1">
-                                <span className="font-medium text-gray-700">Especialidade:</span> {prof.especialidade}
+                                {prof.especialidade?.nome ? (
+                                    <>
+                                        <span className="font-medium text-gray-700">Especialidade:</span> {" "} 
+                                        {prof.especialidade.nome}
+                                    </>
+                                ):(
+                                    <>
+                                        <span className="font-medium text-gray-700">Especialidade:</span> -
+                                    </>
+                                )}
                             </p>
                             <p className="text-gray-600 mb-1">
                                 <span className="font-medium text-gray-700">Registro:</span> {prof.registro}

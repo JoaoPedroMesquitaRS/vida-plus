@@ -3,22 +3,28 @@ import { useEffect, useState } from "react"
 export default function ModalCriarEditarProf({ onClose , modo, fetchProfissionais, profissionalSelecionado }){
 
     const [ locais, setLocais ] = useState([]);
+    const [ especialidades, setEspecialidades ] = useState([]);
     const [ profissional, setProfissional ] = useState({
-        nome: '', idLocalAtendimento: '', especialidade: '', registro: '', telefone: '', email: ''
+        nome: '', idLocalAtendimento: '', idEspecialidade: '', registro: '', telefone: '', email: ''
     });
 
     async function fetchLocais() {
         const data = await fetch('http://localhost:3001/locais-atendimento').then((res) => res.json()).then(setLocais);
     }
 
+    async function fetchEspecialidades() {
+        const data = await fetch('http://localhost:3001/especialidades').then((res) => res.json()).then(setEspecialidades);
+    }
+
     useEffect(() =>{
         fetchLocais();
+        fetchEspecialidades();
     }, [])
 
     useEffect(() => {
         if(modo === 'criar'){
             setProfissional({
-                nome: '', idLocalAtendimento: '', especialidade: '', registro: '', telefone: '', email: ''
+                nome: '', idLocalAtendimento: '', idEspecialidade: '', registro: '', telefone: '', email: ''
             })
         }
         if(modo === 'editar'){
@@ -116,14 +122,21 @@ export default function ModalCriarEditarProf({ onClose , modo, fetchProfissionai
                             <label className="block text-sm font-medium text-gray-700 mb-1">
                                 Especialidade
                             </label>
-                            <input
-                                type="text"
-                                placeholder="Rua, número, bairro..."
+                            <select
                                 className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                name="especialidade"
-                                value={profissional.especialidade}
-                                onChange={handleChange}
-                            />
+                                value={profissional.idEspecialidade}
+                                onChange={(e) => 
+                                setProfissional((prev) => ({
+                                    ...prev,
+                                    idEspecialidade: e.target.value
+                                }))
+                            }
+                            >
+                                <option value="">-</option>
+                                {especialidades.map((esp) => (
+                                   <option value={esp.id}>{esp.nome}</option> 
+                                ))}
+                            </select>
                         </div>
             
                         <div>
@@ -188,7 +201,7 @@ export default function ModalCriarEditarProf({ onClose , modo, fetchProfissionai
                                 const profissionalDigitado = {
                                     nome: profissional.nome,
                                     idLocalAtendimento: profissional.idLocalAtendimento,
-                                    especialidade: profissional.especialidade,
+                                    idEspecialidade: profissional.idEspecialidade,
                                     registro: profissional.registro,
                                     telefone: profissional.telefone,
                                     email: profissional.email
@@ -199,7 +212,7 @@ export default function ModalCriarEditarProf({ onClose , modo, fetchProfissionai
                                 const profissionalDigitado = {
                                     nome: profissional.nome,
                                     idLocalAtendimento: profissional.idLocalAtendimento,
-                                    especialidade: profissional.especialidade,
+                                    idEspecialidade: profissional.idEspecialidade,
                                     registro: profissional.registro,
                                     telefone: profissional.telefone,
                                     email: profissional.email
