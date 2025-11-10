@@ -22,6 +22,12 @@ Prontuario.associate = (models) => {
         foreignKey: 'idPaciente',
         as: 'paciente'
     });
+
+    Prontuario.hasMany(models.Atendimento, {
+        foreignKey: 'idProntuario',
+        as: 'atendimentos'
+    });
+
 }
 
 export default Prontuario;

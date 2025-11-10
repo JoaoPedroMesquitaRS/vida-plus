@@ -1,3 +1,4 @@
+import { Op } from "sequelize";
 import Paciente from "../models/Paciente.js";
 
 export async function criarPaciente(req, res) {
@@ -29,6 +30,28 @@ export async function editarPaciente(req, res) {
             return res.status(400).json({error: `Local não localizado!`})
         }
         res.status(200).json({message: 'Local alterado com sucesso!'});
+    } catch(error){
+        res.status(500).json({error: error.message});
+    }
+}
+
+export async function buscarPaciente(req, res) {
+    try{
+        const { filtro, valor } = req.query;
+        let where = {};
+
+        if (filtro === "Nome") {
+            where.nome = { [Op.like]: `%${valor}%` };
+        } else if (filtro === "CPF") {
+            where.cpf = valor;
+        } else if (filtro === "Data de Nascimento") {
+            where.dataNascimento = valor;
+        }
+
+        const pacientes = await Paciente.findAll({ where });
+
+        res.json(pacientes);
+        
     } catch(error){
         res.status(500).json({error: error.message});
     }
