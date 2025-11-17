@@ -1,41 +1,67 @@
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import SolicitarExameCard from "../exame/SolicitarExameCard.jsx";
 
 export default function ModalAtendimentoPaciente({ onClose, paciente }) {
 
     const [ atendimentoDigitado, setAtendimentoDigitado ] = useState({
         idPaciente: paciente.id, idProntuario: 0, idLocalAtendimento: 0, idProfissional: 0, data: '', status: '', subjetivo: '', objetivo: '', avaliacao: '', plano: ''
     });
+
+    const [ iniciar ] = useState({
+        idPaciente: paciente.id, idProntuario: 0, idLocalAtendimento: 1, idProfissional: 1, data: new Date().toISOString(), status: 'Em andamento'
+    });
+
     const [ locais, setLocais ] = useState([]);
     const [ profissionais, setProfissionais ] = useState([]);
-    const [ idProntuario, setIdProntuario ] = useState();
+    
+    const [ idAtendimento, setIdAtendimento ] = useState();
+
+    const [ atendimentoCriado, setAtendimentoCriado ] = useState([]);
 
     async function validarProntuario() {
+
         const response = await fetch(`http://localhost:3001/prontuarios/validar/${paciente.id}`).then((res) => res.json());
         if(response.existe === true ){
             console.log('Prontuario existe');
         } else{
             console.log('Prontuario não existe')
         }
-        console.log(response.idProntuario)
-        setIdProntuario(response.idProntuario);
+        // console.log(response.idProntuario)
+        // setIdProntuario(response.idProntuario);
+        return response;
+    };
+
+    async function finalizarAtendimento(dados) {
+        const response = await fetch(`http://localhost:3001/atendimentos/${idAtendimento}`, {
+            method: 'PUT',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(dados)
+        }).then(res => (res.json()));
+        return response.id;
     };
 
     async function criarAtendimento(dados) {
+        console.log(dados);
         const response = await fetch('http://localhost:3001/atendimentos', {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json'
             },
             body: JSON.stringify(dados)
-        }).then(res => (res.json));
+        }).then(res => (res.json()));
+        return response;
     };
 
     async function fetchLocais() {
         const data = await fetch('http://localhost:3001/locais-atendimento').then((res) => res.json()).then(setLocais);
+        return data;
     }
 
     async function fetchProfissionais(){
         const data = await fetch('http://localhost:3001/profissionais').then((res) => res.json()).then(setProfissionais);
+        return data;
     }
 
     async function handleChange(e) {
@@ -45,11 +71,30 @@ export default function ModalAtendimentoPaciente({ onClose, paciente }) {
             [name]: value
         }));
     }
-
+    
     useEffect(() => {
-        fetchLocais();
-        fetchProfissionais();
-        validarProntuario();
+
+        async function fluxo() {
+            fetchLocais();
+            fetchProfissionais();
+
+            const resultadoProntuario = await validarProntuario();
+            const idProntuarioGerado = resultadoProntuario.idProntuario;
+
+            const dadosAtendimento = {
+                ...iniciar,
+                idProntuario: idProntuarioGerado,
+            };
+
+            const atendimentoGerado = await criarAtendimento(dadosAtendimento);
+            setAtendimentoCriado(atendimentoGerado);
+
+            setIdAtendimento(atendimentoGerado.id);
+            console.log(`ID do atendimento: ${idAtendimento}`);
+        }
+
+        fluxo();
+
     }, [])
 
     return (
@@ -165,6 +210,9 @@ export default function ModalAtendimentoPaciente({ onClose, paciente }) {
                         ></textarea>
                         </div>
                     </div>
+
+                    <SolicitarExameCard atendimentoCriado={atendimentoCriado}/>
+
                 </div>
 
                 <div className="border-t px-6 py-4 bg-gray-50 flex justify-end gap-3">
@@ -177,18 +225,17 @@ export default function ModalAtendimentoPaciente({ onClose, paciente }) {
                     <button
                         className="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition"
                         onClick={async () => {
-                            const dadosAtendimento = {
+                            const dados = {
                                 ...atendimentoDigitado,
-                                data: new Date().toISOString(),
-                                idProntuario: idProntuario,
-                                status: 'Finalizado'
+                                idLocalAtendimento: Number(atendimentoDigitado.idLocalAtendimento),
+                                idProfissional: Number(atendimentoDigitado.idProfissional),
+                                status: "Finalizado",
                             };
-                            setAtendimentoDigitado((prev) => ({
-                                ...prev,
-                            }))
-                            console.log('Enviando atendimento:', dadosAtendimento);
 
-                            await criarAtendimento(dadosAtendimento);
+                            console.log("Enviando:", dados);
+
+                            const resposta = await finalizarAtendimento(dados);
+                            console.log("Resposta do servidor:", resposta);
                         }}
                     >
                         Finalizar Atendimento
