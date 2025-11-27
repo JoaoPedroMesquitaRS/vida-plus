@@ -2,18 +2,15 @@ import React, { useState } from "react";
 
 export default function SolicitarExameCard({ atendimentoCriado }) {
     const [ categoriaSelecionada, setCategoriaSelecionada ] = useState("");
+    const [ indicacao, setIndicacao ] = useState('');
 
-    async function solicitarExame(categoria) {
+    async function solicitarExame(dados) {
         const response = await fetch('http://localhost:3001/exames', {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json'
             },
-            body: JSON.stringify({
-                categoria: categoria,
-                idPaciente: atendimentoCriado.idPaciente,
-                idAtendimento: atendimentoCriado.id
-            })
+            body: JSON.stringify(dados)
         });
         return response;
     }
@@ -49,12 +46,34 @@ export default function SolicitarExameCard({ atendimentoCriado }) {
                 </select>
             </div>
 
+            <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Indicação
+                </label>
+                <input
+                    type="text"
+                    name="indicacao"
+                    placeholder=""
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    value={indicacao}
+                    onChange={(e) => setIndicacao(e.target.value)}
+                />
+            </div>
+
             <div className="flex justify-end">
                 <button
                     className="px-5 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition"
                         onClick={async () => {
-                        const categoria = categoriaSelecionada
-                        await solicitarExame(categoria);
+                        const dados = {
+                            categoria: categoriaSelecionada,
+                            indicacao: indicacao,
+                            status: 'Pendente',
+                            idPaciente: atendimentoCriado.idPaciente,
+                            idAtendimento: atendimentoCriado.id,
+                        }
+                        await solicitarExame(dados);
+                        setIndicacao('');
+                        setCategoriaSelecionada('');
                     }}
                 >
                     Solicitar

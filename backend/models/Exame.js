@@ -19,6 +19,14 @@ const Exame = sequelize.define('Exame', {
         type: DataTypes.STRING,
         allowNull: false
     },
+    status: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    indicacao: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
     resultado: {
         type: DataTypes.STRING,
         allowNull: true

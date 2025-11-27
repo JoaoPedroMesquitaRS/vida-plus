@@ -236,6 +236,7 @@ export default function ModalAtendimentoPaciente({ onClose, paciente }) {
 
                             const resposta = await finalizarAtendimento(dados);
                             console.log("Resposta do servidor:", resposta);
+                            onClose();
                         }}
                     >
                         Finalizar Atendimento

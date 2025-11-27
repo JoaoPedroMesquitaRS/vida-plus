@@ -9,6 +9,7 @@ import LocalAtendimentoPage from './pages/LocalAtendimentoPage.jsx'
 import Profissional from './pages/ProfissionalPage.jsx'
 import Paciente from './pages/PacientePage.jsx'
 import BuscarPacientePage from './pages/BuscarPacientePage.jsx'
+import ExamesPage from './pages/ExamesPage.jsx'
 
 const router = createBrowserRouter([
   {
@@ -18,7 +19,8 @@ const router = createBrowserRouter([
       { path: 'local-atendimento', element: <LocalAtendimentoPage /> },
       { path: 'profissional', element: <Profissional /> },
       { path: 'paciente', element: <Paciente /> },
-      { path: 'buscar-pacientes', element: <BuscarPacientePage /> }
+      { path: 'buscar-pacientes', element: <BuscarPacientePage /> },
+      { path: 'exames', element: <ExamesPage /> }
     ],
   },
 ]);
