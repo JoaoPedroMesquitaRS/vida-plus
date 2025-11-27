@@ -43,9 +43,9 @@ export async function buscarPaciente(req, res) {
         if (filtro === "Nome") {
             where.nome = { [Op.like]: `%${valor}%` };
         } else if (filtro === "CPF") {
-            where.cpf = valor;
+            where.cpf = { [Op.like]: `%${valor}%` };
         } else if (filtro === "Data de Nascimento") {
-            where.dataNascimento = valor;
+            where.dataNascimento = { [Op.like]: `%${valor}%` };
         }
 
         const pacientes = await Paciente.findAll({ where });

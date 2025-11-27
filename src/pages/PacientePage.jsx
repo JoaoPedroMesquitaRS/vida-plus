@@ -12,6 +12,7 @@ export default function PacientePage(){
 
     async function fetchPacientes() {
         const data = await fetch('http://localhost:3001/pacientes').then((res) => res.json()).then(setPacientes);
+        return data;
     }
 
     useEffect(() => {
@@ -22,7 +23,7 @@ export default function PacientePage(){
         <div className="min-h-screen bg-gray-50 p-6">
             <header className="max-w-6xl mx-auto mb-6">
                 <div className="flex items-center justify-between">
-                    <h1 className="text-2xl font-semibold text-gray-800">Paciente Cadastrados</h1>
+                    <h1 className="text-2xl font-semibold text-gray-800">Pacientes Cadastrados</h1>
                     <div className="flex items-center gap-3">
                         <button
                             type="button"
@@ -48,7 +49,11 @@ export default function PacientePage(){
                                 <span className="font-medium text-gray-700">CPF:</span> {paciente.cpf}
                             </p>
                             <p className="text-gray-600 mb-1">
-                                <span className="font-medium text-gray-700">Data nascimento:</span> {paciente.dataNascimento}
+                                <span className="font-medium text-gray-700">Data nascimento: </span>
+                                {(() => {
+                                    const [ano, mes, dia] = paciente.dataNascimento.split("-");
+                                    return `${dia}/${mes}/${ano}`;
+                                })()}
                             </p>
                             <p className="text-gray-600 mb-1">
                                 <span className="font-medium text-gray-700">Telefone:</span> {paciente.telefone}

@@ -11,10 +11,12 @@ import Paciente from './pages/PacientePage.jsx'
 import BuscarPacientePage from './pages/BuscarPacientePage.jsx'
 import ExamesPage from './pages/ExamesPage.jsx'
 
+import AppLayout from './components/AppLayout.jsx';
+
 const router = createBrowserRouter([
   {
     path: '/',
-    // element: <AppLayout />,
+    element: <AppLayout />,
     children: [
       { path: 'local-atendimento', element: <LocalAtendimentoPage /> },
       { path: 'profissional', element: <Profissional /> },
@@ -26,7 +28,7 @@ const router = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById('root')).render(
-  // <StrictMode>
+  <StrictMode>
     <RouterProvider router={router} />
-  // </StrictMode>,
+  </StrictMode>,
 )

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 
 export default function ModalCriarEditarPaciente({ onClose , modo, fetchPacientes, pacienteSelecionado }){
 
@@ -54,7 +54,7 @@ export default function ModalCriarEditarPaciente({ onClose , modo, fetchPaciente
             
                 <div className="flex items-center justify-between border-b px-6 py-4">
                     <h2 className="text-xl font-semibold text-gray-800">
-                        Cadastrar / Editar Profissional
+                        Cadastrar / Editar Paciente
                     </h2>
                     <button
                         onClick={onClose}
@@ -74,7 +74,7 @@ export default function ModalCriarEditarPaciente({ onClose , modo, fetchPaciente
                         <input
                             type="text"
                             name="nome"
-                            placeholder="Ex: Clínica Central"
+                            placeholder="Digite aqui o nome..."
                             className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             value={paciente.nome}
                             onChange={handleChange}

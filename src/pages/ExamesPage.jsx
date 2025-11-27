@@ -28,19 +28,16 @@ export default function ExamesPage() {
 
     return (
         <div className="min-h-screen bg-gray-50 p-6">
-            <div className="max-w-6xl mx-auto bg-white shadow-md rounded-2xl p-6">
 
-                <div className="mb-8">
-                    <h1 className="text-2xl font-semibold text-gray-800">
-                        Exames
-                    </h1>
-                    <p className="text-gray-600 mt-1">
-                        Gerencie os exames pendentes e finalizados.
-                    </p>
+            <header className="max-w-6xl mx-auto mb-6">
+                <div className="flex items-center justify-between">
+                    <h1 className="text-2xl font-semibold text-gray-800">Exames</h1>
                 </div>
+                <p className="mt-2 text-sm text-gray-500">Gerencie os exames pendentes e finalizados.</p>
+            </header>
 
-                <div className="mb-12">
-                    <div className="justify-between items-center">
+                <div className="mb-12 ml-12 mr-12">
+                    <div className="flex flex-col md:flex-row md:items-end gap-4 mb-6">
                         <div className="flex items-center gap-2">
                             <label className="text-gray-700">Selecione a situação:</label>
                             <select name="" id=""
@@ -128,7 +125,7 @@ export default function ExamesPage() {
                         </table>
                     </div>
                 </div>
-            </div>
+            
 
             {showModal && (
                 <ExameSelecionadoCard exame={exameSelecionado} onClose={() => setShowModal(false)} opcao={opcao} />

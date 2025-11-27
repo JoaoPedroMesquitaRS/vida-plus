@@ -43,7 +43,7 @@ export default function ProfissionalPage(){
                         </button>
                     </div>
                 </div>
-                <p className="mt-2 text-sm text-gray-500">Veja, crie e edite profissionais que prestam serviço.</p>
+                <p className="mt-2 text-sm text-gray-500">Veja, crie e edite profissionais.</p>
             </header>
 
             <main className="max-w-6xl mx-auto grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-4">
