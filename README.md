@@ -9,9 +9,8 @@ humanas, agilizar fluxos de trabalho e oferecer suporte à tomada de
 decisões clínicas e administrativas.
 
 O objetivo principal do projeto é criar um sistema completo e integrado,
-capaz de gerenciar pacientes, profissionais de saúde, agendamentos,
-exames, prontuários eletrônicos e fluxos internos da instituição. O
-sistema será desenvolvido utilizando tecnologias modernas de front-end e
+capaz de gerenciar pacientes, profissionais de saúde, exames, prontuários eletrônicos e fluxos internos da instituição. O
+sistema foi desenvolvido utilizando tecnologias modernas de front-end e
 back-end, com ênfase em segurança, escalabilidade e usabilidade.
 
 Os principais usuários do sistema são:
@@ -28,6 +27,35 @@ Os principais usuários do sistema são:
 A relevância do SGH está na sua capacidade de integrar setores,
 automatizar processos repetitivos, evitar perdas de informações e
 garantir maior segurança e rastreabilidade dos dados clínicos.
+
+# Tecnologias Usadas
+
+Aqui estão as principais tecnologias e ferramentas utilizadas neste projeto:
+
+## Frontend
+
+- React.js
+- React Router
+- Tailwind CSS
+
+## Backend
+
+- Node.js
+- Express.js
+- JWT (JSON Web Token)
+- Middleware de Autenticação
+- Bcrypt
+
+## Banco de Dados
+
+- MongoDB
+- Sequelize
+
+## Ferramentas e Utilidades
+
+- Git & GitHub
+- Postman para testes de API
+- Dotenv para variáveis de ambiente
 
 # Análise e Requisitos
 
