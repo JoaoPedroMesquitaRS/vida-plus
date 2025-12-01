@@ -17,11 +17,11 @@ back-end, com ênfase em segurança, escalabilidade e usabilidade.
 Os principais usuários do sistema são:
 
 -   **Recepcionistas**: responsáveis por cadastrar pacientes, agendar
-    consultas e organizar fluxos de atendimento.\
+    consultas e organizar fluxos de atendimento.
 -   **Médicos**: acessam prontuários, registram diagnósticos, solicitam
-    exames e visualizam histórico clínico.\
+    exames e visualizam histórico clínico.
 -   **Enfermeiros**: realizam triagens, monitoram dados vitais e inserem
-    informações assistenciais.\
+    informações assistenciais.
 -   **Administradores**: gerenciam usuários, permissões, unidades de
     atendimento, profissionais, relatórios e indicadores do sistema.
 
@@ -34,30 +34,30 @@ garantir maior segurança e rastreabilidade dos dados clínicos.
 ## Requisitos Funcionais (RF)
 
 -   **RF01 -- Gerenciar pacientes:** cadastrar, editar e consultar
-    informações.\
+    informações.
 -   **RF02 -- Gerenciar prontuário eletrônico:** registrar informações
-    clínicas, diagnósticos, prescrições e exames.\
+    clínicas, diagnósticos, prescrições e exames.
 -   **RF03 -- Solicitar e registrar exames:** registrar solicitações,
-    resultados e status.\
+    resultados e status.
 -   **RF04 -- Controle de acesso por permissão:** restringir
-    funcionalidades por papel.\
+    funcionalidades por papel.
 -   **RF05 -- Histórico de atendimentos:** armazenar todas as consultas
     realizadas.
 
 ## Requisitos Não Funcionais (RNF)
 
 -   **RNF01 -- Segurança:** autenticação JWT, criptografia e controle de
-    acesso.\
+    acesso.
 -   **RNF02 -- Usabilidade:** interface simples, intuitiva e
-    responsiva.\
+    responsiva.
 -   **RNF03 -- Escalabilidade:** arquitetura preparada para múltiplas
-    unidades.\
+    unidades.
 -   **RNF04 -- Disponibilidade:** funcionamento 24/7 e tolerância a
-    falhas.\
+    falhas.
 -   **RNF05 -- Integridade dos dados:** consistência e proteção contra
-    alterações indevidas.\
+    alterações indevidas.
 -   **RNF06 -- Compatibilidade:** funcionamento nos principais
-    navegadores.\
+    navegadores.
 -   **RNF07 -- Manutenção:** boas práticas e separação de
     responsabilidades.
 
@@ -72,19 +72,19 @@ Na imagem abaixo é possível ver o diagrama UML:
 O projeto foi desenvolvido com um conjunto de módulos bem definidos,
 envolvendo:
 
--   modelos,\
--   rotas,\
--   controladores,\
--   componentes,\
--   hooks,\
--   banco de dados,\
+-   modelos,
+-   rotas,
+-   controladores,
+-   componentes,
+-   hooks,
+-   banco de dados,
 -   e outras camadas da aplicação.
 
 Usuários para teste:
 
--   **email:** role \| **senha:** 123456\
--   **email:** medico01 \| **senha:** 123456\
--   **email:** medico02 \| **senha:** 123456
+-   **email:** role | **senha:** 123456 
+-   **email:** medico01 | **senha:** 123456 
+-   **email:** medico02 | **senha:** 123456
 
 Segue abaixo alguns prints tirados do sistema:
 
@@ -113,14 +113,14 @@ Segue abaixo alguns prints tirados do sistema:
 
 ### Autenticação e Autorização
 
--   Testar login com credenciais válidas.\
--   Rejeitar tokens inválidos ou expirados.\
--   Garantir controle de acesso por roles.\
+-   Testar login com credenciais válidas.
+-   Rejeitar tokens inválidos ou expirados.
+-   Garantir controle de acesso por roles.
 -   Garantir que apenas médicos acessem prontuários.
 
 ### CRUD de Usuários, Pacientes e Profissionais
 
--   Criar, editar, listar e excluir registros.\
+-   Criar, editar, listar e excluir registros.
 -   Validar integridade e códigos de resposta da API.
 
 # Conclusão
@@ -129,8 +129,8 @@ O desenvolvimento do SGH permitiu aplicar conhecimentos técnicos em um
 cenário realista e complexo. Entre as principais lições aprendidas,
 destaca-se a importância de:
 
--   uma arquitetura modular,\
--   segurança e autenticação bem estruturadas,\
+-   uma arquitetura modular,
+-   segurança e autenticação bem estruturadas,
 -   boas práticas de desenvolvimento.
 
 **Desafios:** controle de acesso por papéis e organização do fluxo
@@ -138,9 +138,9 @@ clínico.
 
 **Pontos para evoluções futuras:**
 
--   Integração com APIs externas (laboratórios, faturamento).\
--   Testes automatizados e monitoração contínua.\
--   Dashboards analíticos e indicadores.\
+-   Integração com APIs externas (laboratórios, faturamento).
+-   Testes automatizados e monitoração contínua.
+-   Dashboards analíticos e indicadores.
 -   Suporte a múltiplas unidades.
 
 O projeto demonstra que é possível construir uma solução sólida, segura
