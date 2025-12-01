@@ -47,7 +47,12 @@ Profissional.associate = (models) => {
     Profissional.belongsTo(models.Especialidade, {
         foreignKey: 'idEspecialidade',
         as: 'especialidade'
+    });
+
+    Profissional.hasOne(models.Usuario, {
+        foreignKey: 'idProfissional'
     })
+
 }
 
 export default Profissional;

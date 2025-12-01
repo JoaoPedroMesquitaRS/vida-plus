@@ -8,6 +8,10 @@ const Usuario = sequelize.define('Usuario', {
         primaryKey: true,
         autoIncrement: true
     },
+    idProfissional: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+    },
     nome: {
         type: DataTypes.STRING,
         allowNull: false
@@ -29,5 +33,11 @@ const Usuario = sequelize.define('Usuario', {
     tableName: 'usuarios',
     timestamps: false
 })
+
+Usuario.associate = (models) => {
+    Usuario.belongsTo(models.Profissional, {
+        foreignKey: 'idProfissional'
+    });
+};
 
 export default Usuario;

@@ -4,12 +4,12 @@ import jwt from 'jsonwebtoken';
 
 export async function criarUsuario(req, res) {
     try{
-        const { nome, email, senha, role } = req.body;
+        const { nome, idProfissional, email, senha, role } = req.body;
 
         const senhaCriptografada = await bcrypt.hash(senha, 10)
 
         const usuario = await Usuario.create({
-            nome, email, senha: senhaCriptografada, role
+            nome, idProfissional, email, senha: senhaCriptografada, role
         });
 
         res.status(201).json({message: 'Usuario criado com sucesso!', usuario});

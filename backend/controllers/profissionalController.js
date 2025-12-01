@@ -1,5 +1,6 @@
 import Especialidade from "../models/Especialidade.js";
 import Profissional from "../models/Profissional.js";
+import LocalAtendimento from "../models/LocalAtendimento.js";
 
 export async function criarProfissional(req, res){
     try{
@@ -37,6 +38,18 @@ export async function listarProfissional(req, res) {
         }
     });
     res.json(profissionais);
+};
+
+export async function listarProfissionalId(req, res) {
+    const { id } = req.params;
+    const profissional = await Profissional.findOne({
+        where: {id},
+        include: {
+            model: LocalAtendimento,
+            as: 'localAtendimento'
+        }
+    });
+    res.json(profissional);
 };
 
 export async function deletarProfissional(req, res) {

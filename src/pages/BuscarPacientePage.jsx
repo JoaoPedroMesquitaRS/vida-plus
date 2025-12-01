@@ -37,6 +37,8 @@ export default function BuscarPacientePage(){
     }
     const usuario = useAuthGuard();
     const userRole = usuario?.role;
+    const dadosProf = usuario?.dados?.usuario;
+
 
     if(!usuario) return <p>Aguarde...</p>
 
@@ -231,7 +233,7 @@ export default function BuscarPacientePage(){
             </main>
 
             {showModal && (
-                <ModalAtendimentoPaciente onClose={() => setShowModal(false)} paciente={pacienteSelecionado}/>
+                <ModalAtendimentoPaciente onClose={() => setShowModal(false)} paciente={pacienteSelecionado} userRole={userRole} dadosProf={dadosProf} />
             )}
 
             {showHistoricoModal && (

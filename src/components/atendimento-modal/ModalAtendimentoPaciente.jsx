@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
 import SolicitarExameCard from "../exame/SolicitarExameCard.jsx";
 
-export default function ModalAtendimentoPaciente({ onClose, paciente }) {
+export default function ModalAtendimentoPaciente({ onClose, paciente, dadosProf }) {
 
     const [ atendimentoDigitado, setAtendimentoDigitado ] = useState({
         idPaciente: paciente.id, idProntuario: 0, idLocalAtendimento: 0, idProfissional: 0, data: '', status: '', subjetivo: '', objetivo: '', avaliacao: '', plano: ''
     });
 
     const [ iniciar ] = useState({
-        idPaciente: paciente.id, idProntuario: 0, idLocalAtendimento: 1, idProfissional: 1, data: new Date().toISOString(), status: 'Em andamento'
+        idPaciente: paciente.id, idProntuario: 0, idProfissional: dadosProf.idProfissional, data: new Date().toISOString(), status: 'Em andamento'
     });
 
     const [ locais, setLocais ] = useState([]);
-    const [ profissionais, setProfissionais ] = useState([]);
+    const [ profissionalId, setProfissionalId ] = useState([]);
     
     const [ idAtendimento, setIdAtendimento ] = useState();
 
@@ -56,8 +56,10 @@ export default function ModalAtendimentoPaciente({ onClose, paciente }) {
         return data;
     }
 
-    async function fetchProfissionais(){
-        const data = await fetch('http://localhost:3001/profissionais').then((res) => res.json()).then(setProfissionais);
+    async function fetchProfissionalId(){
+        const response = await fetch(`http://localhost:3001/profissionais/${dadosProf.idProfissional}`);
+        const data = await response.json();
+        setProfissionalId(data);
         return data;
     }
 
@@ -72,8 +74,8 @@ export default function ModalAtendimentoPaciente({ onClose, paciente }) {
     useEffect(() => {
 
         async function fluxo() {
-            fetchLocais();
-            fetchProfissionais();
+            await fetchLocais();
+            const profissional = await fetchProfissionalId();
 
             const resultadoProntuario = await validarProntuario();
             const idProntuarioGerado = resultadoProntuario.idProntuario;
@@ -81,8 +83,8 @@ export default function ModalAtendimentoPaciente({ onClose, paciente }) {
             const dadosAtendimento = {
                 ...iniciar,
                 idProntuario: idProntuarioGerado,
+                idLocalAtendimento: profissional.idLocalAtendimento
             };
-
             const atendimentoGerado = await criarAtendimento(dadosAtendimento);
             setAtendimentoCriado(atendimentoGerado);
 
@@ -121,40 +123,18 @@ export default function ModalAtendimentoPaciente({ onClose, paciente }) {
                         <label className="block text-sm font-medium text-gray-700 mb-1">
                             Local de Atendimento
                         </label>
-                        <select
-                            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
-                            onChange={(e) => 
-                                setAtendimentoDigitado((prev) => ({
-                                    ...prev,
-                                    idLocalAtendimento: e.target.value
-                                }))
-                            }
-                        >
-                            <option value="">Selecione um local</option>
-                            {locais.map((local) => (
-                                <option value={local.id}>{local.nome}</option>
-                            ))}
-                        </select>
+                        <div className="w-full border border-gray-300 rounded-lg px-3 py-2 bg-gray-100 text-gray-700">
+                            {profissionalId?.localAtendimento?.nome}
+                        </div>
                     </div>
 
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">
                             Profissional
                         </label>
-                        <select 
-                            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
-                            onChange={(e) => {
-                                setAtendimentoDigitado((prev) => ({
-                                    ...prev,
-                                    idProfissional: e.target.value
-                                }))
-                            }}
-                        >
-                            <option value="">Selecione o profissional</option>
-                            {profissionais.map((prof) => (
-                                <option value={prof.id}>{prof.nome}</option>
-                            ))}
-                        </select>
+                        <div className="w-full border border-gray-300 rounded-lg px-3 py-2 bg-gray-100 text-gray-700">
+                            {dadosProf.nome}
+                        </div>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
