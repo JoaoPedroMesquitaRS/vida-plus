@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import ModalCriarEditarProf from "../components/profissional-page/ModalCriarEditarProf.jsx";
 import ModalCorfirmarExcluir from "../components/ModalCorfirmarExcluir.jsx";
+import useAuthGuard from "../hooks/useAuthGuard.js";
 
 export default function ProfissionalPage(){
 
@@ -22,8 +23,11 @@ export default function ProfissionalPage(){
     }, [])
 
     useEffect(() => {
-        console.log(profissionais);
     }, [profissionais])
+
+    const usuario = useAuthGuard();
+
+    if(!usuario) return <p>Aguarde...</p>
 
     return (
         <div className="min-h-screen bg-gray-50 p-6">
@@ -48,7 +52,7 @@ export default function ProfissionalPage(){
 
             <main className="max-w-6xl mx-auto grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-4">
                 {profissionais.map((prof) => (
-                    <div className="bg-white shadow-md rounded-2xl p-6 border border-gray-100 hover:shadow-lg transition duration-200 flex flex-col justify-between">
+                    <div key={prof.id} className="bg-white shadow-md rounded-2xl p-6 border border-gray-100 hover:shadow-lg transition duration-200 flex flex-col justify-between">
                         <div>
                             <h2 className="text-xl font-semibold text-gray-800 mb-2">{prof.nome}</h2>
                             <p className="text-gray-600 mb-1">
@@ -108,9 +112,6 @@ export default function ProfissionalPage(){
                 <ModalCorfirmarExcluir onClose={() => setShowDeleteModal(false)} idProfissionalSelecionado={idProfissionalSelecionado} modo={modo} onProfissionalRegistro={fetchProfissionais} />
             )}
 
-            {/* <footer className="mt-10 max-w-6xl mx-auto text-center text-sm text-gray-500">
-                © {new Date().getFullYear()} Seu Sistema • Gerencie seus locais de atendimento
-            </footer> */}
         </div>
     )
 }

@@ -1,6 +1,11 @@
 // components/Sidebar.jsx
-import { Calendar, Users, LogOutIcon, ListOrdered, CircleDollarSign, ListCheck, User, Hospital, Search, ClipboardPlus, GraduationCap, CircleCheck } from 'lucide-react';
+import { Calendar, Users, LogOutIcon, ListOrdered, CircleDollarSign, ListCheck, User, Hospital, Search, ClipboardPlus, GraduationCap, CircleCheck, LogOut } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
+
+const handleLogout = () => {
+    localStorage.removeItem('token'); 
+    window.location.href = "/login";  
+};
 
 const Sidebar = () => {
 
@@ -31,6 +36,17 @@ const Sidebar = () => {
               <span>{label}</span>
             </Link>
           ))}
+
+          <div className="p-4 border-t border-gray-700">
+            <button
+              onClick={handleLogout}
+              className="w-full flex items-center space-x-3 p-2 rounded hover:bg-red-600 transition-colors text-red-400 hover:text-white"
+            >
+              <LogOut size={20} />
+              <span>Sair</span>
+            </button>
+          </div>
+
         </nav>
       </div>
 

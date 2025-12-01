@@ -3,9 +3,11 @@ import { ChevronDown } from "lucide-react";
 import ModalAtendimentoPaciente from "../components/atendimento-modal/ModalAtendimentoPaciente.jsx";
 import ModalHistoricoAtendimentos from "../components/historico-modal/ModalHistoricoAtendimento.jsx";
 import { Link } from "react-router-dom";
+import useAuthGuard from "../hooks/useAuthGuard.js";
 
 export default function BuscarPacientePage(){
 
+    
     const [ filtros ] = useState([
         'Nome', 'CPF', 'Data de Nascimento'
     ]);
@@ -14,17 +16,28 @@ export default function BuscarPacientePage(){
     const [ pacienteSelecionado, setPacienteSelecionado ] = useState('');
     
     const [ resultados, setResultados ] = useState([]);
-
+    
     const [ showModal, setShowModal ] = useState(false);
     const [ showHistoricoModal, setShowHistoricoModal ] = useState(false);
 
     const [menuAberto, setMenuAberto] = useState(null);
 
+    const token = localStorage.getItem("token");
+
     async function buscarPacientes(filtro, valor) {
-        const data = await fetch(`http://localhost:3001/pacientes/buscar-pacientes?filtro=${filtro}&valor=${valor}`).then((res) => res.json());
-        console.log(data)
+        const data = await fetch(`http://localhost:3001/pacientes/buscar-pacientes?filtro=${filtro}&valor=${valor}`, {
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        }).then((res) => res.json());
         setResultados(data);
+
     }
+    const usuario = useAuthGuard();
+
+    if(!usuario) return <p>Aguarde...</p>
 
     return (
         <div className="min-h-screen bg-gray-50 p-6">
@@ -55,10 +68,8 @@ export default function BuscarPacientePage(){
                             className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
                             onChange={(e) => {
                                 setFiltroSelecionado(e.target.value)
-                                // console.log(e.target.value);
                             }}
                         >
-                            {/* <option value="">-</option> */}
                             {filtros.map((filtro, index) => (
                                 <option key={index} value={filtro}>{filtro}</option>
                             ))}
@@ -104,7 +115,6 @@ export default function BuscarPacientePage(){
                             }
 
                             await buscarPacientes(filtroSelecionado, valorBusca)
-                            console.log(`Filtro: ${filtroSelecionado} | Valor: ${valorBusca}`)
                         }}
                     >
                         Buscar

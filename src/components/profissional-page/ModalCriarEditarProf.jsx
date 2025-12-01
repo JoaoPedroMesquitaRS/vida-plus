@@ -182,8 +182,6 @@ export default function ModalCriarEditarProf({ onClose , modo, fetchProfissionai
                         </div>
             
                     </div>
-        
-                    {/* <Profissionais localId={localSelecionado.id}/> */}
                     
                 </div> 
     

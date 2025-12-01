@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ModalLocalAtendimento from "../components/ModalLocalAtendimento.jsx";
 import ModalCorfirmarExcluir from "../components/ModalCorfirmarExcluir.jsx";
+import useAuthGuard from "../hooks/useAuthGuard.js";
 
 export default function LocalAtendimentoPage() {
 
@@ -36,13 +37,17 @@ export default function LocalAtendimentoPage() {
                     .then((data) => {
                         setProfissionais((prev) => ({
                         ...prev,
-                        [local.id]: data.profissionais || []  // 👈 pega apenas o array
+                        [local.id]: data.profissionais || []
                         }));
                     })
                     .catch((err) => console.error("Erro ao carregar profissionais:", err));
             }
         });
     }, [locais])
+
+    const usuario = useAuthGuard();
+
+    if(!usuario) return <p>Aguarde...</p>
 
     return (
         <div className="min-h-screen bg-gray-50 p-6">
@@ -66,9 +71,9 @@ export default function LocalAtendimentoPage() {
             </header>
 
             <main className="max-w-6xl mx-auto grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-4">
-                {/* Card de exemplo - repetir dinamicamente */}
+                
                 {locais.map((local) =>(
-                    <article className="bg-white shadow-md rounded-2xl p-6 border border-gray-100 hover:shadow-lg transition duration-200 flex flex-col justify-between">
+                    <article key={local.id} className="bg-white shadow-md rounded-2xl p-6 border border-gray-100 hover:shadow-lg transition duration-200 flex flex-col justify-between">
                         <div className="flex items-start gap-3">
                             <div className="flex-1">
                                 <h2 className="text-xl font-semibold text-gray-800 mb-2">{local.nome}</h2>
@@ -78,8 +83,8 @@ export default function LocalAtendimentoPage() {
                                 <div className="mt-3">
                                     <span className="inline-flex items-center gap-2 text-xs text-gray-600">
                                         {
-                                            local.tipo.map((tipos) => (
-                                                <span className="inline-flex rounded-full bg-green-100 px-2 py-0.5 text-green-800">{tipos}</span>
+                                            local.tipo.map((tipos, index) => (
+                                                <span key={index} className="inline-flex rounded-full bg-green-100 px-2 py-0.5 text-green-800">{tipos}</span>
                                             ))
                                         }
                                     </span>
@@ -121,7 +126,6 @@ export default function LocalAtendimentoPage() {
                     </article>
                 ))}
 
-                {/* Placeholder para responsividade */}
                 <div className="hidden md:block" aria-hidden="true"></div>
             </main>
 
@@ -132,11 +136,7 @@ export default function LocalAtendimentoPage() {
             {showDeleteModal && (
                 <ModalCorfirmarExcluir onClose={() => setShowDeleteModal(false)} idLocalSelecionado={idLocalSelecionado} modo={modo} onLocalCriado={fetchLocais} />
             )}
-
-            {/* Rodapé simples */}
-            {/* <footer className="mt-10 max-w-6xl mx-auto text-center text-sm text-gray-500">
-                © {new Date().getFullYear()} Seu Sistema • Gerencie seus locais de atendimento
-            </footer> */}
+            
         </div>
     );
 }

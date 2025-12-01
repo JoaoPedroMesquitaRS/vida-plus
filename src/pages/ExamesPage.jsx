@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ExameSelecionadoCard from "../components/exame/ExameSelecionado";
+import useAuthGuard from "../hooks/useAuthGuard";
 
 export default function ExamesPage() {
 
@@ -13,18 +14,12 @@ export default function ExamesPage() {
 
     async function listarExames(opcao) {
         const response = await fetch(`http://localhost:3001/exames?opcao=${opcao}`).then((res) => res.json());
-        console.log(response);
         setExames(response);
     }
 
-    // useEffect(() => {
-        
-    //     async function inciarfluxo() {
-    //         await listarExames();
-    //     }
+    const usuario = useAuthGuard();
 
-    //     inciarfluxo()
-    // }, [opcao]);
+    if(!usuario) return <p>Aguarde...</p>
 
     return (
         <div className="min-h-screen bg-gray-50 p-6">
@@ -74,7 +69,7 @@ export default function ExamesPage() {
                                 
                                 {exames && exames.length > 0 ? (
                                     exames.map((exame) => (
-                                        <tr className="hover:bg-gray-50">
+                                        <tr key={exame.id} className="hover:bg-gray-50">
                                             <td className="px-4 py-3 text-gray-800">{exame.paciente.nome}</td>
                                             <td className="px-4 py-3 text-gray-700">{exame.categoria}</td>
                                             {exame.createdAt ? (
@@ -128,7 +123,7 @@ export default function ExamesPage() {
             
 
             {showModal && (
-                <ExameSelecionadoCard exame={exameSelecionado} onClose={() => setShowModal(false)} opcao={opcao} />
+                <ExameSelecionadoCard exame={exameSelecionado} onClose={() => setShowModal(false)} opcao={opcao} listarExames={() => listarExames('Pendente')} />
             )}
 
         </div>

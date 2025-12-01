@@ -26,8 +26,6 @@ export default function ModalAtendimentoPaciente({ onClose, paciente }) {
         } else{
             console.log('Prontuario não existe')
         }
-        // console.log(response.idProntuario)
-        // setIdProntuario(response.idProntuario);
         return response;
     };
 
@@ -43,7 +41,6 @@ export default function ModalAtendimentoPaciente({ onClose, paciente }) {
     };
 
     async function criarAtendimento(dados) {
-        console.log(dados);
         const response = await fetch('http://localhost:3001/atendimentos', {
             method: 'POST',
             headers: {
@@ -90,7 +87,6 @@ export default function ModalAtendimentoPaciente({ onClose, paciente }) {
             setAtendimentoCriado(atendimentoGerado);
 
             setIdAtendimento(atendimentoGerado.id);
-            console.log(`ID do atendimento: ${idAtendimento}`);
         }
 
         fluxo();
@@ -232,10 +228,7 @@ export default function ModalAtendimentoPaciente({ onClose, paciente }) {
                                 status: "Finalizado",
                             };
 
-                            console.log("Enviando:", dados);
-
                             const resposta = await finalizarAtendimento(dados);
-                            console.log("Resposta do servidor:", resposta);
                             onClose();
                         }}
                     >

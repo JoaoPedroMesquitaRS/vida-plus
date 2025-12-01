@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function ExameSelecionadoCard({ exame, onClose, opcao }) {
+export default function ExameSelecionadoCard({ exame, onClose, opcao, listarExames }) {
 
     const [ resultadoDigitado, setResultadoDigitado ] = useState('')
 
@@ -20,19 +20,16 @@ export default function ExameSelecionadoCard({ exame, onClose, opcao }) {
 
             <div className="bg-white rounded-2xl shadow-xl w-full max-w-2xl mx-4 p-6">
 
-                {/* Cabeçalho */}
                 <div className="flex items-center justify-between mb-6">
                     <h2 className="text-xl font-semibold text-gray-800">
                         Exame Selecionado
                     </h2>
 
-                    {/* Tag com o ID do atendimento */}
                     <span className="px-3 py-1 text-xs font-medium bg-blue-100 text-blue-700 rounded-lg">
                         Atendimento #{exame?.idAtendimento}
                     </span>
                 </div>
 
-                {/* Paciente */}
                 <div className="mb-4">
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                         Paciente
@@ -45,7 +42,6 @@ export default function ExameSelecionadoCard({ exame, onClose, opcao }) {
                     />
                 </div>
 
-                {/* Categoria */}
                 <div className="mb-4">
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                         Categoria
@@ -58,7 +54,6 @@ export default function ExameSelecionadoCard({ exame, onClose, opcao }) {
                     />
                 </div>
 
-                {/* Indicação */}
                 <div className="mb-4">
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                         Indicação
@@ -71,7 +66,6 @@ export default function ExameSelecionadoCard({ exame, onClose, opcao }) {
                     />
                 </div>
 
-                {/* Data da Solicitação */}
                 <div className="mb-4">
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                         Data da Solicitação
@@ -84,7 +78,6 @@ export default function ExameSelecionadoCard({ exame, onClose, opcao }) {
                     />
                 </div>
 
-                {/* Resultado */}
                 <div className="mb-2">
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                         Resultado (laudo)
@@ -132,6 +125,7 @@ export default function ExameSelecionadoCard({ exame, onClose, opcao }) {
                                     await alterarExame(dados)
                                     setResultadoDigitado('');
                                     onClose();
+                                    listarExames('Pendente');
                                 }}
                             >
                                 Salvar

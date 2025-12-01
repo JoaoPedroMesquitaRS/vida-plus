@@ -15,10 +15,6 @@ export default function SolicitarExameCard({ atendimentoCriado }) {
         return response;
     }
 
-    // useEffect(() => {
-    //     console.log(atendimentoCriado);
-    // });
-
     return (
         <div className="w-full max-w-md mx-auto bg-white shadow-md rounded-xl p-6 border border-gray-200">
             <h2 className="text-lg font-semibold text-gray-800 mb-4">

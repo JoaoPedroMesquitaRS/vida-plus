@@ -22,7 +22,8 @@ export default function ModalCriarEditarPaciente({ onClose , modo, fetchPaciente
             const response = await fetch('http://localhost:3001/pacientes', {
                 method: 'POST',
                 headers: {
-                    'Content-type': 'application/json'
+                    'Content-type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
                 },
                 body: JSON.stringify(pacienteDigitado)
             }).then((res) => (res.json()));
@@ -31,7 +32,8 @@ export default function ModalCriarEditarPaciente({ onClose , modo, fetchPaciente
             const response = await fetch(`http://localhost:3001/pacientes/${pacienteSelecionado.id}`, {
                 method: 'PUT',
                 headers: {
-                    'Content-type': 'application/json'
+                    'Content-type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
                 },
                 body: JSON.stringify(pacienteDigitado)
             }).then((res) => (res.json()));
@@ -125,8 +127,6 @@ export default function ModalCriarEditarPaciente({ onClose , modo, fetchPaciente
                         </div>
             
                     </div>
-        
-                    {/* <Profissionais localId={localSelecionado.id}/> */}
                     
                 </div> 
     

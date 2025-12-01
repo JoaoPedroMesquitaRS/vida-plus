@@ -10,7 +10,6 @@ export default function ModalLocalAtendimento({ onClose, onLocalCriado, modo, lo
   useEffect(() => {
     if(modo === 'editar' && localSelecionado){
       setLocal(localSelecionado)
-      console.log(localSelecionado.id)
     }
     if(modo === 'criar'){
       setLocal({
@@ -32,10 +31,10 @@ export default function ModalLocalAtendimento({ onClose, onLocalCriado, modo, lo
     setLocal((prev) => {
       let novosTipos;
       if (checked) {
-        // Adiciona o tipo selecionado
+        
         novosTipos = [...prev.tipo, value];
       } else {
-        // Remove o tipo desmarcado
+        
         novosTipos = prev.tipo.filter((t) => t !== value);
       }
       return { ...prev, tipo: novosTipos };
@@ -43,7 +42,7 @@ export default function ModalLocalAtendimento({ onClose, onLocalCriado, modo, lo
   }
 
   async function adicionarLocal(novoLocal) {
-    console.log(novoLocal)
+    
     const data = await fetch("http://localhost:3001/locais-atendimento", {
       method: 'POST',
       headers: {
@@ -84,9 +83,8 @@ export default function ModalLocalAtendimento({ onClose, onLocalCriado, modo, lo
           </button>
         </div>
 
-        {/* Corpo */}
         <div className="px-6 py-5 space-y-5 max-h-[75vh] overflow-y-auto">
-          {/* Nome */}
+
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Nome do Local
@@ -101,7 +99,6 @@ export default function ModalLocalAtendimento({ onClose, onLocalCriado, modo, lo
             />
           </div>
 
-          {/* Endereço */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Endereço
@@ -116,7 +113,6 @@ export default function ModalLocalAtendimento({ onClose, onLocalCriado, modo, lo
             />
           </div>
 
-          {/* Tipos */}
           <div>
             <span className="block text-sm font-medium text-gray-700 mb-2">
               Tipo de Atendimento
@@ -137,7 +133,6 @@ export default function ModalLocalAtendimento({ onClose, onLocalCriado, modo, lo
             </div>
           </div>
 
-          {/* Observação */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Observação
@@ -155,7 +150,6 @@ export default function ModalLocalAtendimento({ onClose, onLocalCriado, modo, lo
           
         </div> 
 
-        {/* Rodapé */}
         <div className="border-t px-6 py-4 flex justify-end gap-3">
           <button
             onClick={onClose}
@@ -184,7 +178,7 @@ export default function ModalLocalAtendimento({ onClose, onLocalCriado, modo, lo
                 };
                 await editarLocal(localEditado)
               }
-              // onClose;
+
             }}
           >
             Salvar

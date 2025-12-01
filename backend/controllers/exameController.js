@@ -14,8 +14,6 @@ export async function criarExame(req, res) {
 export async function listarExame(req, res) {
     try{
         const { opcao } = req.query;
-        
-        // opção: 'pendente' e 'finalizado'
 
         const exames = await Exame.findAll({
             where: {

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import ModalCriarEditarPaciente from "../components/paciente-page/ModalCriarEditarPaciente.jsx";
+import useAuthGuard from "../hooks/useAuthGuard.js";
 
 export default function PacientePage(){
 
@@ -10,14 +11,26 @@ export default function PacientePage(){
         id: '', nome: '', cpf: '', dataNascimento: '', telefone: ''
     })
 
+    const token = localStorage.getItem("token");
+
     async function fetchPacientes() {
-        const data = await fetch('http://localhost:3001/pacientes').then((res) => res.json()).then(setPacientes);
+        const data = await fetch('http://localhost:3001/pacientes', {
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        }).then((res) => res.json()).then(setPacientes);
         return data;
     }
 
     useEffect(() => {
         fetchPacientes();
     }, []);
+
+    const usuario = useAuthGuard();
+
+    if(!usuario) return <p>Aguarde...</p>
 
     return(
         <div className="min-h-screen bg-gray-50 p-6">
@@ -71,16 +84,7 @@ export default function PacientePage(){
                             >
                                 Editar
                             </button>
-                            <button 
-                                className="px-4 py-2 text-sm font-medium text-red-600 border border-red-500 rounded-xl hover:bg-red-50 transition"
-                                // onClick={() => {
-                                //     setIdProfissionalSelecionado(prof.id);
-                                //     setModo('excluir-profissional');
-                                //     setShowDeleteModal(true);
-                                // }}
-                            >
-                                Excluir
-                            </button>
+                            
                         </div>
                     </div>
                 ))}
@@ -90,13 +94,6 @@ export default function PacientePage(){
                 <ModalCriarEditarPaciente onClose={() => setShowModal(false)} modo={modo} fetchPacientes={fetchPacientes} pacienteSelecionado={pacienteSelecionado} />
             )}
 
-            {/* {showDeleteModal && (
-                <ModalCorfirmarExcluir onClose={() => setShowDeleteModal(false)} idProfissionalSelecionado={idProfissionalSelecionado} modo={modo} onProfissionalRegistro={fetchProfissionais} />
-            )} */}
-
-            {/* <footer className="mt-10 max-w-6xl mx-auto text-center text-sm text-gray-500">
-                © {new Date().getFullYear()} Seu Sistema • Gerencie seus locais de atendimento
-            </footer> */}
         </div>
     )
 };

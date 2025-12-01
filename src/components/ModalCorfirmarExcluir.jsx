@@ -1,7 +1,6 @@
 export default function modalConfirmarExcluir({ onClose, idLocalSelecionado, modo, onLocalCriado, idProfissionalSelecionado, onProfissionalRegistro }){
 
     async function deletar(modo) {
-        console.log(idLocalSelecionado);
         if(modo === 'excluir-local'){
             const response = await fetch(`http://localhost:3001/locais-atendimento/${idLocalSelecionado}`, {
                 method: 'DELETE',
@@ -49,7 +48,6 @@ export default function modalConfirmarExcluir({ onClose, idLocalSelecionado, mod
                     className="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition"
                     onClick={async () => {
                         await deletar(modo);
-                        console.log(idLocalSelecionado)
                     }}
                 >
                     Deletar

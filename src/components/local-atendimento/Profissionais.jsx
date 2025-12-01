@@ -11,7 +11,7 @@ export default function Profisionais({ localId }){
                 .then((data) => {
                     setProfissionais((prev) => ({
                     ...prev,
-                    [localId]: data.profissionais || []  // 👈 pega apenas o array
+                    [localId]: data.profissionais || []
                     }));
                 })
                 .catch((err) => console.error("Erro ao carregar profissionais:", err));

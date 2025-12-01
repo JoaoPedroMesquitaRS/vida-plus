@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { X } from "lucide-react";
 
-// export default function ModalHistoricoAtendimentos({ show, onClose, paciente, atendimentos = [] }) {
 export default function ModalHistoricoAtendimentos({ onClose, paciente }) {
 
     const [ atendimentos, setAtendimentos ] = useState([]);
@@ -10,14 +9,11 @@ export default function ModalHistoricoAtendimentos({ onClose, paciente }) {
     async function fetchAtendimentos() {
         const response = await fetch(`http://localhost:3001/prontuarios/atendimentos/${paciente.id}`).then(res => (res.json()));
         setAtendimentos(response);
-        console.log(response);
     }
 
     useEffect(() => {
         fetchAtendimentos();
     }, []);
-    
-    // if (!show) return null;
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
