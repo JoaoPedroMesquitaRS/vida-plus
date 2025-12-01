@@ -89,25 +89,25 @@ Usuários para teste:
 Segue abaixo alguns prints tirados do sistema:
 
 - Perfil Admin: 
-![Print 01](./assets/print-01.PNG)
+![Print 01](./assets/print01.PNG)
 
 - Perfil Admin: 
-![Print 02](./assets/print-02.PNG)
+![Print 02](./assets/print02.PNG)
 
 - Perfil Admin: 
-![Print 03](./assets/print-03.PNG)
+![Print 03](./assets/print03.PNG)
 
 - Perfil Médico: 
-![Print 04](./assets/print-04.PNG)
+![Print 04](./assets/print04.PNG)
 
 - Perfil Admin: 
-![Print 05](./assets/print-05.PNG)
+![Print 05](./assets/print05.PNG)
 
 - Perfil Tecnico: 
-![Print 06](./assets/print-06.PNG)
+![Print 06](./assets/print06.PNG)
 
 - Perfil Médico: 
-![Print 07](./assets/print-07.PNG)
+![Print 07](./assets/print07.PNG)
 
 # Planos de Teste (Backend)
 
