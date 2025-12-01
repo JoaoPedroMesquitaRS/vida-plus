@@ -19,10 +19,6 @@ export default function useAuthGuard() {
                         Authorization: "Bearer " + token
                     }
                 });
-                console.log('[INICIO]')
-                const ver = await resposta.clone().json()
-                console.log(ver)
-                console.log('[FINAL]')
 
                 if (!resposta.ok) {
                     localStorage.removeItem("token");
