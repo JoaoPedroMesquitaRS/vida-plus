@@ -36,6 +36,7 @@ export default function BuscarPacientePage(){
 
     }
     const usuario = useAuthGuard();
+    const userRole = usuario?.role;
 
     if(!usuario) return <p>Aguarde...</p>
 
@@ -44,15 +45,25 @@ export default function BuscarPacientePage(){
             <header className="max-w-6xl mx-auto mb-6">
                 <div className="flex items-center justify-between">
                     <h1 className="text-2xl font-semibold text-gray-800">Pacientes</h1>
-                    <div className="flex items-center gap-3">
-                        <Link
-                            type="button"
-                            to='/paciente'
-                            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
-                        >
-                            + Criar / Editar Paciente
-                        </Link>
-                    </div>
+                    
+                    {userRole !== 'recepcionista' && userRole !== 'admin' ?
+                    
+                        <></>
+
+                    :
+
+                        <div className="flex items-center gap-3">
+                            <Link
+                                type="button"
+                                to='/paciente'
+                                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+                            >
+                                + Criar / Editar Paciente
+                            </Link>
+                        </div>
+
+                    }
+                    
                 </div>
                 <p className="mt-2 text-sm text-gray-500">Busque um paciente pelo filtro desejado e inicie o atendimento.</p>
             </header>
@@ -168,28 +179,48 @@ export default function BuscarPacientePage(){
                                         </button>
 
                                         {menuAberto === resultado.id && (
-                                            <div className="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
-                                                <button
-                                                    className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-t-lg"
-                                                    onClick={() => {
-                                                    setMenuAberto(null);
-                                                    setPacienteSelecionado(resultado);
-                                                    setShowModal(true);
-                                                    }}
-                                                >
-                                                    Iniciar
-                                                </button>
-                                                <button
-                                                    className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-b-lg"
-                                                    onClick={() => {
+
+                                            userRole !== 'medico' ? (
+
+                                                <div className="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
+                                                    <button
+                                                        className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-b-lg"
+                                                        onClick={() => {
+                                                            setMenuAberto(null);
+                                                            setPacienteSelecionado(resultado);
+                                                            setShowHistoricoModal(true)
+                                                        }}
+                                                    >
+                                                        Histórico
+                                                    </button>
+                                                </div>
+                                                
+                                            ) : (
+
+                                                <div className="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
+                                                    <button
+                                                        className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-t-lg"
+                                                        onClick={() => {
                                                         setMenuAberto(null);
                                                         setPacienteSelecionado(resultado);
-                                                        setShowHistoricoModal(true)
-                                                    }}
-                                                >
-                                                    Histórico
-                                                </button>
-                                            </div>
+                                                        setShowModal(true);
+                                                        }}
+                                                    >
+                                                        Iniciar
+                                                    </button>
+                                                    <button
+                                                        className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-b-lg"
+                                                        onClick={() => {
+                                                            setMenuAberto(null);
+                                                            setPacienteSelecionado(resultado);
+                                                            setShowHistoricoModal(true)
+                                                        }}
+                                                    >
+                                                        Histórico
+                                                    </button>
+                                                </div>
+
+                                            )
                                         )}
                                     </td>
                                 </tr>
@@ -204,7 +235,7 @@ export default function BuscarPacientePage(){
             )}
 
             {showHistoricoModal && (
-                <ModalHistoricoAtendimentos onClose={() => setShowHistoricoModal(false)} paciente={pacienteSelecionado}/>
+                <ModalHistoricoAtendimentos onClose={() => setShowHistoricoModal(false)} paciente={pacienteSelecionado} userRole={userRole} />
             )}
 
         </div>   

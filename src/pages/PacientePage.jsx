@@ -29,6 +29,7 @@ export default function PacientePage(){
     }, []);
 
     const usuario = useAuthGuard();
+    const userRole = usuario?.role;
 
     if(!usuario) return <p>Aguarde...</p>
 
@@ -37,18 +38,28 @@ export default function PacientePage(){
             <header className="max-w-6xl mx-auto mb-6">
                 <div className="flex items-center justify-between">
                     <h1 className="text-2xl font-semibold text-gray-800">Pacientes Cadastrados</h1>
-                    <div className="flex items-center gap-3">
-                        <button
-                            type="button"
-                            onClick={() => {
-                                setShowModal(true);
-                                setModo('criar');
-                            }}
-                            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
-                        >
-                            + Criar Paciente
-                        </button>
-                    </div>
+                    
+                    {userRole !== 'recepcionista' && userRole !== 'admin' ?
+
+                        <></>
+                    
+                    :
+
+                        <div className="flex items-center gap-3">
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    setShowModal(true);
+                                    setModo('criar');
+                                }}
+                                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+                            >
+                                + Criar Paciente
+                            </button>
+                        </div>
+                    
+                    }
+
                 </div>
                 <p className="mt-2 text-sm text-gray-500">Veja, crie e edite pacientes.</p>
             </header>

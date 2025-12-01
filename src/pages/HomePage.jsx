@@ -12,7 +12,7 @@ export default function HomePage(){
             <div className="text-center max-w-xl">
                 
                 <h1 className="text-4xl font-bold text-gray-800 mb-4">
-                    Bem-vindo ao VidaPlus
+                    Bem-vindo(a) ao VidaPlus
                 </h1>
 
                 <p className="text-gray-600 text-lg leading-relaxed mb-8">

@@ -18,8 +18,48 @@ export default function ExamesPage() {
     }
 
     const usuario = useAuthGuard();
+    const userRole = usuario?.role;
 
     if(!usuario) return <p>Aguarde...</p>
+
+    // if (usuario.role !== "tecnico") {
+    //     return (
+    //         <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-6">
+    //             <div className="bg-red-100 text-red-600 p-6 rounded-full mb-4 shadow-md">
+    //                 <svg
+    //                     xmlns="http://www.w3.org/2000/svg"
+    //                     className="h-12 w-12"
+    //                     fill="none"
+    //                     viewBox="0 0 24 24"
+    //                     stroke="currentColor"
+    //                 >
+    //                     <path
+    //                         strokeLinecap="round"
+    //                         strokeLinejoin="round"
+    //                         strokeWidth={2}
+    //                         d="M12 9v2m0 4h.01M4.93 4.93L19.07 19.07M12 2a10 10 0 100 20 10 10 0 000-20z"
+    //                     />
+    //                 </svg>
+    //             </div>
+
+    //             <h2 className="text-2xl font-bold text-gray-800 mb-2">
+    //                 Acesso Negado
+    //             </h2>
+
+    //             <p className="text-gray-600 max-w-md mb-6">
+    //                 Você não possui permissão para acessar esta página.
+    //                 Verifique seu tipo de usuário ou entre em contato com o administrador do sistema.
+    //             </p>
+
+    //             <button
+    //                 onClick={() => window.history.back()}
+    //                 className="px-5 py-2 bg-red-600 text-white rounded-lg shadow hover:bg-red-700 transition"
+    //             >
+    //                 Voltar
+    //             </button>
+    //         </div>
+    //    )
+    // }
 
     return (
         <div className="min-h-screen bg-gray-50 p-6">
@@ -79,7 +119,25 @@ export default function ExamesPage() {
                                                 )
                                             }
                                             <td className="px-4 py-3">
-                                                    {opcao && opcao === 'Pendente' ? (
+                                                {userRole !== 'tecnico' ? (
+
+                                                    opcao && opcao === 'Pendente' ? (
+                                                        <>-</>
+                                                    ) : (
+                                                        <button 
+                                                            className="px-3 py-1.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+                                                            onClick={() => {
+                                                                setExameSelecionado(exame);
+                                                                setShowModal(true);
+                                                            }}
+                                                        >
+                                                            Detalhes
+                                                        </button>
+                                                    )
+
+                                                ) : (
+                                                    opcao && opcao === 'Pendente' ? (
+                                                        
                                                         <button 
                                                             className="px-3 py-1.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
                                                             onClick={() => {
@@ -99,8 +157,8 @@ export default function ExamesPage() {
                                                         >
                                                             Detalhes
                                                         </button>
-                                                    ) 
-                                                    }
+                                                    )
+                                                )}
                                             </td>
                                         </tr>
                                     ))

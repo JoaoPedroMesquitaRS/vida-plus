@@ -26,6 +26,7 @@ export default function ProfissionalPage(){
     }, [profissionais])
 
     const usuario = useAuthGuard();
+    const userRole = usuario?.role;
 
     if(!usuario) return <p>Aguarde...</p>
 
@@ -34,18 +35,29 @@ export default function ProfissionalPage(){
             <header className="max-w-6xl mx-auto mb-6">
                 <div className="flex items-center justify-between">
                     <h1 className="text-2xl font-semibold text-gray-800">Profissionais Cadastrados</h1>
-                    <div className="flex items-center gap-3">
-                        <button
-                            type="button"
-                            onClick={() => {
-                                setShowModal(true);
-                                setModo('criar')
-                            }}
-                            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
-                        >
-                            + Criar Profissional
-                        </button>
-                    </div>
+
+                    {userRole !== 'admin' ?
+
+                        <></>
+
+                    :
+
+                        <div className="flex items-center gap-3">
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    setShowModal(true);
+                                    setModo('criar')
+                                }}
+                                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+                            >
+                                + Criar Profissional
+                            </button>
+                        </div>
+
+                    
+                    }
+
                 </div>
                 <p className="mt-2 text-sm text-gray-500">Veja, crie e edite profissionais.</p>
             </header>
@@ -78,28 +90,36 @@ export default function ProfissionalPage(){
                             </p>
                         </div>
 
-                        <div className="flex justify-start mt-4 gap-3">
-                            <button 
-                                className="px-4 py-2 text-sm font-medium text-blue-600 border border-blue-500 rounded-xl hover:bg-blue-50 transition"
-                                onClick={() => {
-                                    setProfissionalSelecionado(prof);
-                                    setShowModal(true);
-                                    setModo('editar');
-                                }}
-                            >
-                                Editar
-                            </button>
-                            <button 
-                                className="px-4 py-2 text-sm font-medium text-red-600 border border-red-500 rounded-xl hover:bg-red-50 transition"
-                                onClick={() => {
-                                    setIdProfissionalSelecionado(prof.id);
-                                    setModo('excluir-profissional');
-                                    setShowDeleteModal(true);
-                                }}
-                            >
-                                Excluir
-                            </button>
-                        </div>
+                        {userRole !== 'admin' ? 
+                        
+                            <></>
+
+                        :
+
+                            <div className="flex justify-start mt-4 gap-3">
+                                <button 
+                                    className="px-4 py-2 text-sm font-medium text-blue-600 border border-blue-500 rounded-xl hover:bg-blue-50 transition"
+                                    onClick={() => {
+                                        setProfissionalSelecionado(prof);
+                                        setShowModal(true);
+                                        setModo('editar');
+                                    }}
+                                >
+                                    Editar
+                                </button>
+                                <button 
+                                    className="px-4 py-2 text-sm font-medium text-red-600 border border-red-500 rounded-xl hover:bg-red-50 transition"
+                                    onClick={() => {
+                                        setIdProfissionalSelecionado(prof.id);
+                                        setModo('excluir-profissional');
+                                        setShowDeleteModal(true);
+                                    }}
+                                >
+                                    Excluir
+                                </button>
+                            </div>
+                        }
+
                     </div>
                 ))}
             </main>

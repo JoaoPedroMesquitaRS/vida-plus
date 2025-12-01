@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { X } from "lucide-react";
 
-export default function ModalHistoricoAtendimentos({ onClose, paciente }) {
+export default function ModalHistoricoAtendimentos({ onClose, paciente, userRole }) {
 
     const [ atendimentos, setAtendimentos ] = useState([]);
     const [atendimentoAberto, setAtendimentoAberto] = useState(null);
@@ -20,7 +20,7 @@ export default function ModalHistoricoAtendimentos({ onClose, paciente }) {
             <div className="bg-white w-full max-w-3xl rounded-2xl shadow-lg p-6 relative">
                 <div className="flex justify-between items-center mb-4 border-b pb-3">
                     <h2 className="text-xl font-semibold text-gray-800">
-                        Histórico de Atendimentos — {paciente?.nome}
+                        Histórico de Atendimentos - {paciente?.nome}
                     </h2>
                     <button
                         onClick={onClose}
@@ -74,7 +74,7 @@ export default function ModalHistoricoAtendimentos({ onClose, paciente }) {
                                         </td>
                                     </tr>
 
-                                    {atendimentoAberto === a.id && (
+                                    {atendimentoAberto === a.id && userRole === 'medico' ? (
                                     <tr className="bg-gray-50 border-b">
                                         <td colSpan={4} className="px-6 py-4 text-sm text-gray-700 space-y-2">
                                             <div>
@@ -95,6 +95,8 @@ export default function ModalHistoricoAtendimentos({ onClose, paciente }) {
                                             </div>
                                         </td>
                                     </tr>
+                                    ) : (
+                                        <></>
                                     )}
                                     </React.Fragment>
                                 ))}

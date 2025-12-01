@@ -46,6 +46,7 @@ export default function LocalAtendimentoPage() {
     }, [locais])
 
     const usuario = useAuthGuard();
+    const userRole = usuario?.role;
 
     if(!usuario) return <p>Aguarde...</p>
 
@@ -54,18 +55,28 @@ export default function LocalAtendimentoPage() {
             <header className="max-w-6xl mx-auto mb-6">
                 <div className="flex items-center justify-between">
                 <h1 className="text-2xl font-semibold text-gray-800">Locais de Atendimento</h1>
-                <div className="flex items-center gap-3">
-                    <button
-                        type="button"
-                        onClick={() => {
-                            setShowModal(true);
-                            setModo('criar')
-                        }}
-                        className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
-                    >
-                    + Criar Local
-                    </button>
-                </div>
+
+                {userRole !== 'admin' ?
+                
+                    <></>
+                
+                :
+
+                    <div className="flex items-center gap-3">
+                        <button
+                            type="button"
+                            onClick={() => {
+                                setShowModal(true);
+                                setModo('criar')
+                            }}
+                            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+                        >
+                        + Criar Local
+                        </button>
+                    </div>
+            
+                }
+
                 </div>
                 <p className="mt-2 text-sm text-gray-500">Veja, crie e edite locais onde os serviços são prestados.</p>
             </header>
@@ -90,37 +101,46 @@ export default function LocalAtendimentoPage() {
                                     </span>
                                 </div>
 
-                                <div className="flex justify-start mt-4 gap-3">
-                                    <button
-                                        type="button"
-                                        className="px-4 py-2 text-sm font-medium text-blue-600 border border-blue-500 rounded-xl hover:bg-blue-50 transition"
-                                        data-open-edit-modal
-                                        onClick={() => {
-                                            setModo('editar');
-                                            setLocalSelecionado({
-                                                id: local.id,
-                                                nome: local.nome,
-                                                endereco: local.endereco,
-                                                info: local.info,
-                                                tipo: local.tipo
-                                            })
-                                            setShowModal(true)
-                                        }}
-                                    >
-                                        Editar
-                                    </button>
-                                    <button
-                                        type="button"
-                                        className="px-4 py-2 text-sm font-medium text-red-600 border border-red-500 rounded-xl hover:bg-red-50 transition"
-                                        onClick={() => {
-                                            setIdLocalSelecionado(local.id);
-                                            setModo('excluir-local');
-                                            setShowDeleteModal(true)
-                                        }}
-                                    >
-                                        Excluir
-                                    </button>
-                                </div>
+                                {userRole !== 'admin' ? 
+                                
+                                    <></>
+                                
+                                :
+
+                                    <div className="flex justify-start mt-4 gap-3">
+                                        <button
+                                            type="button"
+                                            className="px-4 py-2 text-sm font-medium text-blue-600 border border-blue-500 rounded-xl hover:bg-blue-50 transition"
+                                            data-open-edit-modal
+                                            onClick={() => {
+                                                setModo('editar');
+                                                setLocalSelecionado({
+                                                    id: local.id,
+                                                    nome: local.nome,
+                                                    endereco: local.endereco,
+                                                    info: local.info,
+                                                    tipo: local.tipo
+                                                })
+                                                setShowModal(true)
+                                            }}
+                                        >
+                                            Editar
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className="px-4 py-2 text-sm font-medium text-red-600 border border-red-500 rounded-xl hover:bg-red-50 transition"
+                                            onClick={() => {
+                                                setIdLocalSelecionado(local.id);
+                                                setModo('excluir-local');
+                                                setShowDeleteModal(true)
+                                            }}
+                                        >
+                                            Excluir
+                                        </button>
+                                    </div>
+                                
+                                }
+
                             </div>
                         </div>
                     </article>
