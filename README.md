@@ -151,6 +151,48 @@ Segue abaixo alguns prints tirados do sistema:
 -   Criar, editar, listar e excluir registros.
 -   Validar integridade e códigos de resposta da API.
 
+## Como instalar e executar o projeto
+
+### 1. Clone este repositório
+
+    git clone https://github.com/JoaoPedroMesquitaRS/vida-plus
+
+### 2. Acesse o diretório
+
+    cd vida-plus
+
+------------------------------------------------------------------------
+
+## 📦 Instalação das dependências
+
+### Frontend
+
+    npm install
+
+### Backend
+
+    cd backend
+    npm install
+
+------------------------------------------------------------------------
+
+## Executando
+
+### Frontend
+
+    npm run dev
+
+### Backend
+
+    cd backend
+    npx nodemon index.js
+
+Backend em:
+
+    http://localhost:3001
+
+------------------------------------------------------------------------
+
 # Conclusão
 
 O desenvolvimento do SGH permitiu aplicar conhecimentos técnicos em um
